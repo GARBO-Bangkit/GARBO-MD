@@ -7,12 +7,12 @@ import android.view.WindowInsets
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.garbo.garboapplication.MainActivity
 import com.garbo.garboapplication.R
 import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.data.pref.UserModel
 import com.garbo.garboapplication.databinding.ActivityLoginBinding
 import com.garbo.garboapplication.view.UserViewModelFactory
+import com.garbo.garboapplication.view.dashboard.HomeActivity
 import com.garbo.garboapplication.view.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                                 setMessage(getString(R.string.successful_login))
                                 setPositiveButton("Lanjut") { _, _ ->
                                     val intent =
-                                        Intent(context, MainActivity::class.java)
+                                        Intent(context, HomeActivity::class.java)
                                     intent.flags =
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(intent)
