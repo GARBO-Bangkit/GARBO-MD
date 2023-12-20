@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <include layout="@layout/quick_menu_item"
+        android:id="@+id/menu_scan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+    <include layout="@layout/quick_menu_item"
+        android:id="@+id/menu_history"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+    <include layout="@layout/quick_menu_item"
+        android:id="@+id/menu_store"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+    <include layout="@layout/quick_menu_item"
+        android:id="@+id/menu_more"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"/>
+
+</GridLayout>

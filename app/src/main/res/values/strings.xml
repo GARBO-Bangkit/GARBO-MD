@@ -19,4 +19,21 @@
     <string name="title_register_activity">Register</string>
     <string name="message_register_page">Sudah daftar? Klik di sini untuk masuk</string>
     <string name="successful_register">Akun anda berhasil didaftarkan!!</string>
+    <string name="title_home">Home</string>
+    <string name="title_upload">Upload</string>
+    <string name="title_history">History</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_mission">Mission</string>
+    <string name="title_store">Store</string>
+    <string name="title_points">Points</string>
+    <string name="title_more">More</string>
+    <string name="current_val">current_val</string>
+    <string name="cd_quick_menu_item">quick menu item</string>
+    <string name="title_quick_menu">Menu Cepat</string>
+    <string name="title_latest_history">Riwayat Terakhir</string>
+    <string name="view_more">Lihat selengkapnya</string>
+    <string name="item_image_desc">history item photo</string>
+    <string name="history_category">Category</string>
+    <string name="history_date">Datetime</string>
+    <string name="history_points">+ Values points</string>
 </resources>

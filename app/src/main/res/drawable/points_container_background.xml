@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Set the background color for the container -->
+            <solid android:color="@color/design_default_color_on_primary" />
+
+            <!-- Optionally, define a stroke for the border if needed -->
+            <stroke
+                android:width="1dp"
+                android:color="@color/black" />
+
+            <!-- Set the corner radius -->
+            <corners android:radius="16dp" />
+
+            <!-- Optionally, add padding inside the drawable if needed -->
+            <padding
+                android:left="16dp"
+                android:top="16dp"
+                android:right="16dp"
+                android:bottom="16dp" />
+        </shape>
+    </item>
+</selector>
