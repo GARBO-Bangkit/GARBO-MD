@@ -1,15 +1,18 @@
 package com.garbo.garboapplication.view.login
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
-import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.garbo.garboapplication.MainActivity
+import com.garbo.garboapplication.R
+import com.garbo.garboapplication.Result
+import com.garbo.garboapplication.data.pref.UserModel
+import com.garbo.garboapplication.databinding.ActivityLoginBinding
+import com.garbo.garboapplication.view.UserViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -24,19 +27,10 @@ class LoginActivity : AppCompatActivity() {
 
         setupView()
         setupAction()
-        playAnimation()
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+        window.insetsController?.hide(WindowInsets.Type.statusBars())
         supportActionBar?.hide()
     }
 
@@ -63,13 +57,13 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            signupButton.setOnClickListener {
-                val intentToSignup = Intent(this@LoginActivity, SignupActivity::class.java)
-                intent.flags =
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intentToSignup)
-                finish()
-            }
+//            signupButton.setOnClickListener {
+//                val intentToSignup = Intent(this@LoginActivity, SignupActivity::class.java)
+//                intent.flags =
+//                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                startActivity(intentToSignup)
+//                finish()
+//            }
         }
     }
 
@@ -82,15 +76,16 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     is Result.Success -> {
-                        val data = result.data
-                        val loginResult = data.loginResult!!
-                        val user =
-                            UserModel(
-                                email,
-                                loginResult.token,
-                                loginResult.name,
-                                true
-                            )
+//                        val data = result.data
+//                        val loginResult = data.loginResult!!
+//                        val user =
+//                            UserModel(
+//                                email,
+//                                loginResult.token,
+//                                loginResult.name,
+//                                true
+//                            )
+                        val user = UserModel("test@mail.com", "", "test", true)
 
                         viewModel.saveSession(user).apply {
                             binding.progressBar.visibility = View.GONE
@@ -116,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
 
                         AlertDialog.Builder(this@LoginActivity).apply {
                             setTitle("Error")
-                            setMessage("Login gagal.\nTerjadi kesalahan " + result.error)
+                            setMessage("Login gagal.\nTerjadi kesalahan ")
                             setPositiveButton("Ok") { dialog, _ ->
                                 dialog.dismiss()
                             }

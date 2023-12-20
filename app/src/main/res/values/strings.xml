@@ -10,5 +10,9 @@
     <string name="prompt_password">Password</string>
     <string name="message_login_page">Belum daftar? Klik di bawah ini</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="error_empty_password">Isi password terlebih dahulu!</string>
+    <string name="error_empty_email">Isi email terlebih dahulu!</string>
+    <string name="error_empty_name">Isi nama terlebih dahulu!</string>
     <string name="action_sign_up">Sign up\n</string>
+    <string name="successful_login">Anda berhasil Login!!</string>
 </resources>
