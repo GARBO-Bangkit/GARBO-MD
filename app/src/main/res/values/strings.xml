@@ -5,7 +5,8 @@
     <string name="invalid_email">Format email salah!</string>
     <string name="invalid_password">Password harus >5 karakter</string>
     <string name="title_activity_login">Login</string>
-    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in">Login</string>
+    <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="message_login_page">Belum daftar? Klik di bawah ini</string>
@@ -13,6 +14,9 @@
     <string name="error_empty_password">Isi password terlebih dahulu!</string>
     <string name="error_empty_email">Isi email terlebih dahulu!</string>
     <string name="error_empty_name">Isi nama terlebih dahulu!</string>
-    <string name="action_sign_up">Sign up\n</string>
     <string name="successful_login">Anda berhasil Login!!</string>
+    <string name="action_sign_up">Register</string>
+    <string name="title_register_activity">Register</string>
+    <string name="message_register_page">Sudah daftar? Klik di sini untuk masuk</string>
+    <string name="successful_register">Akun anda berhasil didaftarkan!!</string>
 </resources>

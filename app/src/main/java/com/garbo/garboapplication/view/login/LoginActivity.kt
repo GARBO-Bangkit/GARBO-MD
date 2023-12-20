@@ -13,6 +13,7 @@ import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.data.pref.UserModel
 import com.garbo.garboapplication.databinding.ActivityLoginBinding
 import com.garbo.garboapplication.view.UserViewModelFactory
+import com.garbo.garboapplication.view.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel> {
@@ -57,13 +58,13 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-//            signupButton.setOnClickListener {
-//                val intentToSignup = Intent(this@LoginActivity, SignupActivity::class.java)
-//                intent.flags =
-//                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//                startActivity(intentToSignup)
-//                finish()
-//            }
+            signupButton.setOnClickListener {
+                val intentToSignup = Intent(this@LoginActivity, RegisterActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intentToSignup)
+                finish()
+            }
         }
     }
 
@@ -111,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
 
                         AlertDialog.Builder(this@LoginActivity).apply {
                             setTitle("Error")
-                            setMessage("Login gagal.\nTerjadi kesalahan ")
+                            setMessage("Login gagal.\nTerjadi kesalahan")
                             setPositiveButton("Ok") { dialog, _ ->
                                 dialog.dismiss()
                             }

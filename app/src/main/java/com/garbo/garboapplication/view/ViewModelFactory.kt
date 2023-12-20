@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.garbo.garboapplication.data.repository.UserRepository
 import com.garbo.garboapplication.di.Injection
 import com.garbo.garboapplication.view.login.LoginViewModel
+import com.garbo.garboapplication.view.register.RegisterViewModel
 
 class UserViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -15,6 +16,10 @@ class UserViewModelFactory(private val repository: UserRepository) :
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
+                RegisterViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
