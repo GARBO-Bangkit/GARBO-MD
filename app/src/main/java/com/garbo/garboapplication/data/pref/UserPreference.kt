@@ -1,0 +1,53 @@
+package com.garbo.garboapplication.data.pref
+
+import android.content.Context
+import kotlinx.coroutines.flow.Flow
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
+class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
+
+    suspend fun saveSession(user: UserModel) {
+        dataStore.edit { preferences ->
+            preferences[EMAIL_KEY] = user.email
+            preferences[TOKEN_KEY] = user.token
+            preferences[NAME] = user.name
+            preferences[IS_LOGIN_KEY] = true
+        }
+    }
+
+    fun getSession(): Flow<UserModel> {
+        return dataStore.data.map { preferences ->
+            UserModel(
+                preferences[EMAIL_KEY] ?: "",
+                preferences[TOKEN_KEY] ?: "",
+                preferences[NAME] ?: "",
+                preferences[IS_LOGIN_KEY] ?: false
+            )
+        }
+    }
+
+    suspend fun logout() {
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: UserPreference? = null
+
+        private val EMAIL_KEY = stringPreferencesKey("email")
+        private val TOKEN_KEY = stringPreferencesKey("token")
+        private val NAME = stringPreferencesKey("name")
+        private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+
+        fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
+            return INSTANCE ?: synchronized(this) {
+                val instance = UserPreference(dataStore)
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}
