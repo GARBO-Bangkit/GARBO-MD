@@ -43,4 +43,6 @@
     <string name="empty_image_warning">Masukkan gambar terlebih dahulu!</string>
     <string name="successful_upload">File berhasil diupload!!</string>
     <string name="permission_not_granted">Akses Ditolak!!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
