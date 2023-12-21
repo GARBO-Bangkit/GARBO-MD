@@ -36,4 +36,10 @@
     <string name="history_category">Category</string>
     <string name="history_date">Datetime</string>
     <string name="history_points">+ Values points</string>
+    <string name="title_camera">Kamera</string>
+    <string name="title_gallery">Galeri</string>
+    <string name="camera_preview">Camera Preview</string>
+    <string name="invalid_choose_image">Tidak ada gambar yang dipilih</string>
+    <string name="empty_image_warning">Masukkan gambar terlebih dahulu!</string>
+    <string name="successful_upload">File berhasil diupload!!</string>
 </resources>
