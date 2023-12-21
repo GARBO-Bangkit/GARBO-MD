@@ -26,35 +26,35 @@ class UserRepository private constructor(
         return userPreference.getSession()
     }
 
-    fun login(email: String, pass: String): LiveData<Result<LoginResponse>> = liveData {
-//        emit(Result.Loading)
-//        try {
-//            val response = apiService.login(email, pass)
-//            if (response.error == true) {
-//                emit(Result.Error(response.message ?: ""))
-//            } else {
-//                _loginResponse.value = Result.Success(response)
-//                emitSource(_loginResponse)
-//            }
-//        } catch (e: Exception) {
-//            emit(Result.Error(e.message.toString()))
-//        }
+    fun login(username: String, pass: String): LiveData<Result<LoginResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.login(username, pass)
+            if (response.accessToken == null) {
+                emit(Result.Error(response.message ?: ""))
+            } else {
+                _loginResponse.value = Result.Success(response)
+                emitSource(_loginResponse)
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
     }
 
-    fun register(name: String, email: String, pass: String): LiveData<Result<RegisterResponse>> =
+    fun register(username: String, pass: String, name: String, email: String): LiveData<Result<RegisterResponse>> =
         liveData {
-//            emit(Result.Loading)
-//            try {
-//                val response = apiService.register(name, email, pass)
-//                if (response.error == true) {
-//                    emit(kotlin.Result.Error(response.message ?: ""))
-//                } else {
-//                    _registerResponse.value = kotlin.Result.Success(response)
-//                    emitSource(_registerResponse)
-//                }
-//            } catch (e: Exception) {
-//                emit(Result.Error(e.message.toString()))
-//            }
+            emit(Result.Loading)
+            try {
+                val response = apiService.register(username, pass, name, email)
+                if (response.message == "User registered successfully") {
+                    _registerResponse.value = Result.Success(response)
+                    emitSource(_registerResponse)
+                } else {
+                    emit(Result.Error(response.message ?: ""))
+                }
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+            }
         }
 
     suspend fun logout() {

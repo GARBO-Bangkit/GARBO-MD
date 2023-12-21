@@ -18,23 +18,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_register_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:alpha="0"
-        android:text="@string/title_register_activity"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
-        tools:alpha="100" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_register_name"
@@ -42,12 +34,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="0"
         android:text="@string/prompt_name"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_register_title"
-        tools:alpha="100" />
+        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ed_register_name_layout"
@@ -56,15 +46,44 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_register_name"
-        app:startIconDrawable="@drawable/ic_baseline_person_24"
-        tools:alpha="100">
+        app:startIconDrawable="@drawable/ic_baseline_person_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_register_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_register_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/prompt_username"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_name_layout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ed_register_username_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_register_username"
+        app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_register_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -76,13 +95,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:alpha="0"
+        android:layout_marginTop="8dp"
         android:text="@string/prompt_email"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_name_layout"
-        tools:alpha="100" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_username_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ed_register_email_layout"
@@ -91,12 +108,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_register_email"
-        app:startIconDrawable="@drawable/ic_baseline_email_24"
-        tools:alpha="100">
+        app:startIconDrawable="@drawable/ic_baseline_email_24">
 
         <com.garbo.garboapplication.customview.EmailEditText
             android:id="@+id/ed_register_email"
@@ -112,12 +127,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="0"
         android:text="@string/prompt_password"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_email_layout"
-        tools:alpha="100" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ed_register_password_layout"
@@ -126,13 +139,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_register_password"
-        app:startIconDrawable="@drawable/ic_baseline_lock_24"
-        tools:alpha="100">
+        app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.garbo.garboapplication.customview.PasswordEditText
             android:id="@+id/ed_register_password"
@@ -149,13 +160,11 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="4dp"
-        android:alpha="0"
-        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTint="@color/my_primary"
         android:text="@string/action_sign_up"
         app:layout_constraintEnd_toEndOf="@id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@id/guidelineVertical"
-        app:layout_constraintTop_toBottomOf="@+id/ed_register_password_layout"
-        tools:alpha="100" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_password_layout" />
 
     <TextView
         android:id="@+id/loginTextView"
@@ -164,7 +173,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:alpha="0"
         android:gravity="center_horizontal"
         android:text="@string/message_register_page"
         android:textColor="@color/black"
@@ -172,23 +180,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal2"
-        tools:alpha="100" />
+        app:layout_constraintTop_toBottomOf="@+id/guidelineHorizontal2" />
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="48dp"
-        android:alpha="0"
-        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTint="@color/my_primary"
         android:text="@string/action_sign_in"
         app:layout_constraintEnd_toEndOf="@id/guidelineVertical2"
         app:layout_constraintStart_toStartOf="@id/guidelineVertical"
-        app:layout_constraintTop_toBottomOf="@+id/loginTextView"
-        tools:alpha="100" />
+        app:layout_constraintTop_toBottomOf="@+id/loginTextView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineHorizontal"
@@ -196,7 +201,7 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintGuide_percent="0.15"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline

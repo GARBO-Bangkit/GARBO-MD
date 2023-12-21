@@ -36,11 +36,17 @@ class RegisterActivity : AppCompatActivity() {
     private fun setupAction() {
         with(binding) {
             signupButton.setOnClickListener {
+                val username = edRegisterUsername.text.toString()
                 val name = edRegisterName.text.toString()
                 val email = edRegisterEmail.text.toString()
                 val pass = edRegisterPassword.text.toString()
 
                 when {
+                    username.isBlank() -> {
+                        edRegisterUsername.requestFocus()
+                        edRegisterUsername.error = getString(R.string.error_empty_username)
+                    }
+
                     name.isBlank() -> {
                         edRegisterName.requestFocus()
                         edRegisterName.error = getString(R.string.error_empty_name)
@@ -57,7 +63,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        viewModel.register(name, email, pass)
+                        viewModel.register(username, pass, name, email)
                             .observe(this@RegisterActivity) { result ->
                                 if (result != null) {
                                     when (result) {
@@ -89,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
 
                                             AlertDialog.Builder(this@RegisterActivity).apply {
                                                 setTitle("Error")
-                                                setMessage("Terjadi kesalahan")
+                                                setMessage("Register gagal.\nTerjadi kesalahan " + result.error)
                                                 setPositiveButton("Ok") { dialog, _ ->
                                                     dialog.dismiss()
                                                 }

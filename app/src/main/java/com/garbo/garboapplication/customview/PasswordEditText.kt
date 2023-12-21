@@ -32,7 +32,7 @@ class PasswordEditText : TextInputEditText {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val parentLayout = this@PasswordEditText.parent.parent as TextInputLayout
-                if (s != null && s.length < 8) {
+                if (s != null && s.length < 5) {
                     parentLayout.error = context.getString(R.string.invalid_password)
                 } else {
                     parentLayout.error = null

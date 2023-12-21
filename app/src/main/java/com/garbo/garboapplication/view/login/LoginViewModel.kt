@@ -7,7 +7,7 @@ import com.garbo.garboapplication.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
-    fun login(email: String, pass: String) = repository.login(email, pass)
+    fun login(username: String, pass: String) = repository.login(username, pass)
 
     fun saveSession(user: UserModel) {
         viewModelScope.launch {

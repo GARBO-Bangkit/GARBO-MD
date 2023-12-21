@@ -38,13 +38,13 @@ class LoginActivity : AppCompatActivity() {
     private fun setupAction() {
         with(binding) {
             loginButton.setOnClickListener {
-                val email = edLoginEmail.text.toString()
+                val username = edLoginUsername.text.toString()
                 val pass = edLoginPassword.text.toString()
 
                 when {
-                    email.isBlank() -> {
-                        edLoginEmail.requestFocus()
-                        edLoginEmail.error = getString(R.string.error_empty_email)
+                    username.isBlank() -> {
+                        edLoginUsername.requestFocus()
+                        edLoginUsername.error = getString(R.string.error_empty_username)
                     }
 
                     pass.isBlank() -> {
@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        login(email, pass)
+                        login(username, pass)
                     }
                 }
             }
@@ -68,8 +68,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun login(email: String, pass: String) {
-        viewModel.login(email, pass).observe(this@LoginActivity) { result ->
+    private fun login(username: String, pass: String) {
+        viewModel.login(username, pass).observe(this@LoginActivity) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -77,16 +77,13 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     is Result.Success -> {
-//                        val data = result.data
-//                        val loginResult = data.loginResult!!
-//                        val user =
-//                            UserModel(
-//                                email,
-//                                loginResult.token,
-//                                loginResult.name,
-//                                true
-//                            )
-                        val user = UserModel("test@mail.com", "", "test", true)
+                        val data = result.data
+                        val user =
+                            UserModel(
+                                username,
+                                data.accessToken!!,
+                                true
+                            )
 
                         viewModel.saveSession(user).apply {
                             binding.progressBar.visibility = View.GONE
@@ -112,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
 
                         AlertDialog.Builder(this@LoginActivity).apply {
                             setTitle("Error")
-                            setMessage("Login gagal.\nTerjadi kesalahan")
+                            setMessage("Login gagal.\nTerjadi kesalahan " + result.error)
                             setPositiveButton("Ok") { dialog, _ ->
                                 dialog.dismiss()
                             }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.garbo.garboapplication.data.repository.UploadRepository
 import com.garbo.garboapplication.data.repository.UserRepository
 import com.garbo.garboapplication.di.Injection
+import com.garbo.garboapplication.view.dashboard.HomeViewModel
 import com.garbo.garboapplication.view.login.LoginViewModel
 import com.garbo.garboapplication.view.register.RegisterViewModel
 import com.garbo.garboapplication.view.upload.UploadViewModel
@@ -40,6 +41,39 @@ class UserViewModelFactory(private val repository: UserRepository) :
                 }
             }
             return INSTANCE as UserViewModelFactory
+        }
+    }
+}
+
+class HomeViewModelFactory(
+    private val userRepository: UserRepository,
+) : ViewModelProvider.NewInstanceFactory() {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return when {
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(userRepository) as T
+            }
+
+            else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+        }
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: HomeViewModelFactory? = null
+
+        @JvmStatic
+        fun getInstance(context: Context): HomeViewModelFactory {
+            if (INSTANCE == null) {
+                synchronized(HomeViewModelFactory::class.java) {
+                    INSTANCE = HomeViewModelFactory(
+                        Injection.provideUserRepository(context),
+                    )
+                }
+            }
+            return INSTANCE as HomeViewModelFactory
         }
     }
 }
