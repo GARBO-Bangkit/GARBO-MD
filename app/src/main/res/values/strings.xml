@@ -42,4 +42,5 @@
     <string name="invalid_choose_image">Tidak ada gambar yang dipilih</string>
     <string name="empty_image_warning">Masukkan gambar terlebih dahulu!</string>
     <string name="successful_upload">File berhasil diupload!!</string>
+    <string name="permission_not_granted">Akses Ditolak!!</string>
 </resources>

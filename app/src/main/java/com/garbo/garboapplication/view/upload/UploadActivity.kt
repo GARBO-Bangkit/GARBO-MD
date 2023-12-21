@@ -1,23 +1,21 @@
 package com.garbo.garboapplication.view.upload
 
-import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.garbo.garboapplication.R
 import com.garbo.garboapplication.databinding.ActivityUploadBinding
-import com.garbo.garboapplication.view.UploadViewModelFactory
-import com.garbo.garboapplication.view.login.LoginActivity
-import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.getImageUri
-import com.garbo.garboapplication.reduceFileImage
-import com.garbo.garboapplication.uriToFile
-import com.garbo.garboapplication.view.dashboard.HomeActivity
+import com.garbo.garboapplication.view.UploadViewModelFactory
 
 class UploadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadBinding
@@ -74,8 +72,45 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
-        currentImageUri = getImageUri(this)
-        launcherIntentCamera.launch(currentImageUri)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                PERMISSION_REQUEST_CAMERA
+            )
+        } else {
+            currentImageUri = getImageUri(this)
+            launcherIntentCamera.launch(currentImageUri)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CAMERA -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    currentImageUri = getImageUri(this)
+                    launcherIntentCamera.launch(currentImageUri)
+                } else {
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Error")
+                        setMessage(getString(R.string.permission_not_granted))
+                        setPositiveButton("Ok") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        create()
+                        show()
+                    }
+                }
+                return
+            }
+        }
     }
 
     private val launcherIntentCamera = registerForActivityResult(
@@ -149,5 +184,9 @@ class UploadActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val PERMISSION_REQUEST_CAMERA = 1
     }
 }
