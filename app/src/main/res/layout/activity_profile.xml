@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".view.profile.ProfileActivity">
 
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/custom_appbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

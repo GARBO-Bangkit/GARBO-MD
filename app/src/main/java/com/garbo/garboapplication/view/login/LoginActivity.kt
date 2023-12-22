@@ -80,6 +80,8 @@ class LoginActivity : AppCompatActivity() {
                         val data = result.data
                         val user =
                             UserModel(
+                                data.email!!,
+                                data.name!!,
                                 username,
                                 data.accessToken!!,
                                 true

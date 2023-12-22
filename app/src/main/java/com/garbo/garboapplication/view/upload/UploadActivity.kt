@@ -1,6 +1,7 @@
 package com.garbo.garboapplication.view.upload
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.garbo.garboapplication.R
 import com.garbo.garboapplication.databinding.ActivityUploadBinding
 import com.garbo.garboapplication.getImageUri
 import com.garbo.garboapplication.view.UploadViewModelFactory
+import com.garbo.garboapplication.view.login.LoginActivity
 
 class UploadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadBinding
@@ -30,16 +32,22 @@ class UploadActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+            token = user.token
+        }
+
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        viewModel.getSession().observe(this) { user ->
-//            if (!user.isLogin) {
-//                startActivity(Intent(this, LoginActivity::class.java))
-//                finish()
-//            }
-//            token = user.token
-//        }
+        val toolbar = binding.appBar.toolbarCustom
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         with(binding) {
             btnGallery.setOnClickListener { startGallery() }

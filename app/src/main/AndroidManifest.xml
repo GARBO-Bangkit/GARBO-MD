@@ -19,12 +19,15 @@
         android:theme="@style/Theme.Garbo">
         <activity
             android:name=".view.history.HistoryActivity"
+            android:parentActivityName=".view.dashboard.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".view.profile.ProfileActivity"
+            android:parentActivityName=".view.dashboard.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".view.upload.UploadActivity"
+            android:parentActivityName=".view.dashboard.HomeActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
