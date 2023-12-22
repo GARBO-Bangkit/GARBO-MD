@@ -4,10 +4,10 @@ import com.garbo.garboapplication.data.request.LoginRequest
 import com.garbo.garboapplication.data.request.RegisterRequest
 import com.garbo.garboapplication.data.response.FileUploadResponse
 import com.garbo.garboapplication.data.response.HistoryResponse
-import com.garbo.garboapplication.data.response.HistoryResponseItem
 import com.garbo.garboapplication.data.response.LoginResponse
 import com.garbo.garboapplication.data.response.PointResponse
 import com.garbo.garboapplication.data.response.RegisterResponse
+import com.garbo.garboapplication.data.response.ResultListItem
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -40,7 +40,7 @@ interface ApiService {
     @GET("lasthistory")
     suspend fun getLatestHistory(
         @Header("Authorization") token: String
-    ): HistoryResponseItem
+    ): ResultListItem
 
     @Multipart
     @POST("sendpicture")

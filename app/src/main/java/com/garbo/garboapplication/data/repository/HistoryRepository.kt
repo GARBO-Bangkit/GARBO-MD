@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.data.response.HistoryResponse
-import com.garbo.garboapplication.data.response.HistoryResponseItem
+import com.garbo.garboapplication.data.response.ResultListItem
 import com.garbo.garboapplication.data.retrofit.ApiService
 
 class HistoryRepository private constructor(
     private val apiService: ApiService
 ) {
     private val _historyResponse = MutableLiveData<Result<HistoryResponse>>()
-    private val _lastHistoryResponse = MutableLiveData<Result<HistoryResponseItem>>()
+    private val _lastHistoryResponse = MutableLiveData<Result<ResultListItem>>()
 
     fun getHistories(token: String): LiveData<Result<HistoryResponse>> = liveData {
         emit(Result.Loading)
@@ -30,7 +30,7 @@ class HistoryRepository private constructor(
         }
     }
 
-    fun getLatestHistories(token: String): LiveData<Result<HistoryResponseItem>> = liveData {
+    fun getLatestHistories(token: String): LiveData<Result<ResultListItem>> = liveData {
         emit(Result.Loading)
         try {
             val reqToken = "Bearer $token"

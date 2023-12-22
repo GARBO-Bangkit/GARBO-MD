@@ -57,7 +57,7 @@ class HistoryFragment : Fragment() {
                         val data = result.data
 
                         viewManager = LinearLayoutManager(context)
-                        viewAdapter = HistoryListAdapter(data.historyResponse!!)
+                        viewAdapter = HistoryListAdapter(data.resultList!!)
 
                         with(binding.rvHistories) {
                             setHasFixedSize(true)

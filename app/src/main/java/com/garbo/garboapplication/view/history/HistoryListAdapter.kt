@@ -4,24 +4,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.garbo.garboapplication.data.response.HistoryResponseItem
+import com.garbo.garboapplication.data.response.ResultListItem
 import com.garbo.garboapplication.databinding.ItemRowHistoryBinding
 import com.garbo.garboapplication.getDateFromTimestamp
 
-class HistoryListAdapter(private val items: List<HistoryResponseItem>) :
+class HistoryListAdapter(private val items: List<ResultListItem>) :
     RecyclerView.Adapter<HistoryListAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemRowHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: HistoryResponseItem) {
+        fun bind(item: ResultListItem) {
             with(binding) {
                 Glide.with(itemView.context).load(item.photo_url).into(binding.ivItemPhoto)
                 tvItemName.text = item.classification
                 tvItemDate.text = item.timestamp?.let { getDateFromTimestamp(it) }
                 tvItemPoints.text = when (item.classification) {
-                    in setOf("Cardboard", "Paper") -> "+10 points"
-                    "Plastic" -> "+15 points"
-                    in setOf("Glass", "Metal") -> "+20 points"
+                    in setOf("cardboard", "paper") -> "+10 points"
+                    "plastic" -> "+15 points"
+                    in setOf("glass", "metal") -> "+20 points"
                     else -> "+0 points"
                 }
             }
