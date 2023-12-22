@@ -16,7 +16,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Garbo">
+        android:theme="@style/Theme.Garbo"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="tiramisu">
         <activity
             android:name=".view.history.HistoryActivity"
             android:parentActivityName=".view.dashboard.HomeActivity"

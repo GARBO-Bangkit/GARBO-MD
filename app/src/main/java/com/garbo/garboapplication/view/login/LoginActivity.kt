@@ -2,6 +2,7 @@ package com.garbo.garboapplication.view.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import androidx.activity.viewModels
@@ -86,6 +87,8 @@ class LoginActivity : AppCompatActivity() {
                                 data.accessToken!!,
                                 true
                             )
+
+                        Log.d("USER", "$user")
 
                         viewModel.saveSession(user).apply {
                             binding.progressBar.visibility = View.GONE
