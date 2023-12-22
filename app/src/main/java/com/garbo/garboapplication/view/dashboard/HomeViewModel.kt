@@ -13,6 +13,8 @@ class HomeViewModel(private val userRepository: UserRepository): ViewModel() {
         return userRepository.getSession().asLiveData()
     }
 
+    fun getPoints(token: String) = userRepository.getPoints(token)
+
     fun logout() {
         viewModelScope.launch {
             userRepository.logout()

@@ -1,5 +1,6 @@
 package com.garbo.garboapplication.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -9,6 +10,7 @@ import com.garbo.garboapplication.data.pref.UserPreference
 import com.garbo.garboapplication.data.request.LoginRequest
 import com.garbo.garboapplication.data.request.RegisterRequest
 import com.garbo.garboapplication.data.response.LoginResponse
+import com.garbo.garboapplication.data.response.PointResponse
 import com.garbo.garboapplication.data.response.RegisterResponse
 import com.garbo.garboapplication.data.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +21,7 @@ class UserRepository private constructor(
 ) {
     private val _loginResponse = MutableLiveData<Result<LoginResponse>>()
     private val _registerResponse = MutableLiveData<Result<RegisterResponse>>()
+    private val _pointResponse = MutableLiveData<Result<PointResponse>>()
 
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
@@ -83,6 +86,24 @@ class UserRepository private constructor(
                 emit(Result.Error(friendlyMessage))
             }
         }
+
+    fun getPoints(token: String): LiveData<Result<PointResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            Log.d("TOKEN", token)
+            val response = apiService.point(token)
+            Log.d("RESPONSE", "$response")
+            if (response.error != null) {
+                emit(Result.Error(response.error.toString()))
+            } else {
+                _pointResponse.value = Result.Success(response)
+                emitSource(_pointResponse)
+            }
+        } catch (e: Exception) {
+            Log.d("ERR-RESPONSE", e.message.toString())
+            emit(Result.Error(e.message.toString()))
+        }
+    }
 
     suspend fun logout() {
         userPreference.logout()
