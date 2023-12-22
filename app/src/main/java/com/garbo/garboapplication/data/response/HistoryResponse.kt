@@ -22,5 +22,8 @@ data class HistoryResponseItem(
     val timestamp: String? = null,
 
     @field:SerializedName("username")
-    val username: String? = null
+    val username: String? = null,
+
+    @field:SerializedName("error")
+    val error: String? = null,
 )

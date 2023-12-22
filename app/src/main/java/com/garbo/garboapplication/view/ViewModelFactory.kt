@@ -49,13 +49,14 @@ class UserViewModelFactory(private val repository: UserRepository) :
 
 class HomeViewModelFactory(
     private val userRepository: UserRepository,
+    private val historyRepository: HistoryRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel(userRepository) as T
+                HomeViewModel(userRepository, historyRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
@@ -72,6 +73,7 @@ class HomeViewModelFactory(
                 synchronized(HomeViewModelFactory::class.java) {
                     INSTANCE = HomeViewModelFactory(
                         Injection.provideUserRepository(context),
+                        Injection.provideHistoryRepository(context)
                     )
                 }
             }
