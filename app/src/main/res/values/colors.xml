@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#DDDDDD</color>
     <color name="my_primary">#388e3c</color>
     <color name="my_on_primary">#e8f5e9</color>
 </resources>

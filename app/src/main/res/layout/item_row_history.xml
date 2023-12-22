@@ -4,21 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="4dp"
-    card_view:cardCornerRadius="4dp">
+    card_view:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_item_photo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:adjustViewBounds="false"
             android:contentDescription="@string/item_image_desc"
             android:scaleType="fitCenter"
@@ -32,12 +27,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textStyle="bold"
+            card_view:layout_constraintBottom_toTopOf="@id/guidelineHorizontal"
             card_view:layout_constraintStart_toEndOf="@id/iv_item_photo"
             card_view:layout_constraintTop_toTopOf="@id/iv_item_photo"
-            card_view:layout_constraintBottom_toTopOf="@id/guidelineHorizontal"
+            card_view:layout_constraintVertical_bias="0.9"
             tools:text="@string/history_category" />
 
         <TextView
@@ -47,21 +42,22 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            card_view:layout_constraintStart_toEndOf="@id/iv_item_photo"
             card_view:layout_constraintBottom_toBottomOf="@id/iv_item_photo"
+            card_view:layout_constraintStart_toEndOf="@id/iv_item_photo"
             card_view:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
+            card_view:layout_constraintVertical_bias="0.5"
             tools:text="@string/history_date" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             card_view:layout_constraintStart_toStartOf="@id/guidelineVertical2"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@string/history_points"/>
+            tools:text="@string/title_points"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineHorizontal"

@@ -23,8 +23,6 @@ class HomeActivity : AppCompatActivity() {
     private var _token = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
@@ -34,6 +32,9 @@ class HomeActivity : AppCompatActivity() {
                 _token = user.token
             }
         }
+
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupView()
     }

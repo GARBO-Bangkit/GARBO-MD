@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Garbo</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Selamat datang!"</string>
     <string name="logo">Garbo logo</string>
 
     <string name="invalid_username">Username tidak valid</string>
@@ -41,13 +41,13 @@
     <string name="title_quick_menu">Menu Cepat</string>
     <string name="title_latest_history">Riwayat Terakhir</string>
     <string name="cd_quick_menu_item">quick menu item</string>
-    <string name="current_val">current_val</string>
+    <string name="current_val">10</string>
     <string name="view_more">Lihat selengkapnya</string>
+    <string name="your_points">Poinmu</string>
 
     <string name="item_image_desc">history item photo</string>
     <string name="history_category">Category</string>
     <string name="history_date">Datetime</string>
-    <string name="history_points">+ Values points</string>
 
     <string name="camera_preview">Camera Preview</string>
     <string name="invalid_choose_image">Tidak ada gambar yang dipilih</string>

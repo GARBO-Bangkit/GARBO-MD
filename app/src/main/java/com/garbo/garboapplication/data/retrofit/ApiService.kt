@@ -1,25 +1,21 @@
 package com.garbo.garboapplication.data.retrofit
 
+import com.garbo.garboapplication.data.request.LoginRequest
+import com.garbo.garboapplication.data.request.RegisterRequest
 import com.garbo.garboapplication.data.response.LoginResponse
 import com.garbo.garboapplication.data.response.RegisterResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @FormUrlEncoded
+
     @POST("register")
     suspend fun register(
-        @Field("username") username: String,
-        @Field("password") password: String,
-        @Field("name") name: String,
-        @Field("email") email: String
+        @Body request: RegisterRequest
     ): RegisterResponse
 
-    @FormUrlEncoded
     @POST("login")
     suspend fun login(
-        @Field("username") username: String,
-        @Field("password") password: String
+        @Body request: LoginRequest
     ): LoginResponse
 }

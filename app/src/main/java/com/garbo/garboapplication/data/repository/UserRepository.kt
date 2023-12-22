@@ -9,6 +9,8 @@ import com.garbo.garboapplication.data.response.LoginResponse
 import com.garbo.garboapplication.data.response.RegisterResponse
 import com.garbo.garboapplication.data.retrofit.ApiService
 import com.garbo.garboapplication.Result
+import com.garbo.garboapplication.data.request.LoginRequest
+import com.garbo.garboapplication.data.request.RegisterRequest
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
@@ -29,7 +31,8 @@ class UserRepository private constructor(
     fun login(username: String, pass: String): LiveData<Result<LoginResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.login(username, pass)
+            val request = LoginRequest(username, pass)
+            val response = apiService.login(request)
             if (response.accessToken == null) {
                 emit(Result.Error(response.message ?: ""))
             } else {
@@ -45,7 +48,8 @@ class UserRepository private constructor(
         liveData {
             emit(Result.Loading)
             try {
-                val response = apiService.register(username, pass, name, email)
+                val request = RegisterRequest(username, pass, name, email)
+                val response = apiService.register(request)
                 if (response.message == "User registered successfully") {
                     _registerResponse.value = Result.Success(response)
                     emitSource(_registerResponse)
