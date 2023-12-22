@@ -2,6 +2,7 @@ package com.garbo.garboapplication.view.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -38,13 +39,13 @@ class HomeActivity : AppCompatActivity() {
             } else {
                 _token = user.token
                 getPoints(_token)
-                getLatestHistory(_token)
             }
         }
     }
 
     private fun getPoints(token: String) {
         viewModel.getPoints(token).observe(this) { result ->
+            Log.d("REQUEST", "point")
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -55,6 +56,7 @@ class HomeActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         val data = result.data
                         binding.pointsContainer.tvPointsValue.text = data.points
+                        getLatestHistory(_token)
                     }
 
                     is Result.Error -> {
@@ -106,6 +108,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun getLatestHistory(token: String){
         viewModel.getLatestHistory(token).observe(this) { result ->
+            Log.d("REQUEST", "history")
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
