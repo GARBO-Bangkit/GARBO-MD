@@ -2,7 +2,6 @@ package com.garbo.garboapplication.view.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import androidx.activity.viewModels
@@ -88,8 +87,6 @@ class LoginActivity : AppCompatActivity() {
                                 true
                             )
 
-                        Log.d("USER", "$user")
-
                         viewModel.saveSession(user).apply {
                             binding.progressBar.visibility = View.GONE
                             AlertDialog.Builder(this@LoginActivity).apply {
@@ -114,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
 
                         AlertDialog.Builder(this@LoginActivity).apply {
                             setTitle("Error")
-                            setMessage("Login gagal.\nTerjadi kesalahan " + result.error)
+                            setMessage("Login gagal.\n" + result.error)
                             setPositiveButton("Ok") { dialog, _ ->
                                 dialog.dismiss()
                             }

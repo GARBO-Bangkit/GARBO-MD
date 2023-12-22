@@ -1,12 +1,9 @@
 package com.garbo.garboapplication.view.dashboard
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.garbo.garboapplication.R
+import androidx.appcompat.app.AppCompatActivity
 import com.garbo.garboapplication.databinding.ActivityHomeBinding
 import com.garbo.garboapplication.view.HomeViewModelFactory
 import com.garbo.garboapplication.view.history.HistoryActivity
@@ -40,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        with(binding.quickMenus){
+        with(binding.quickMenus) {
             ivUploadMenu.setOnClickListener {
                 val intentToUpload = Intent(this@HomeActivity, UploadActivity::class.java)
                 startActivity(intentToUpload)

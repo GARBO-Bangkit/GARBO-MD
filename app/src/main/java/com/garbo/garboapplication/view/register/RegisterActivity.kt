@@ -95,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
 
                                             AlertDialog.Builder(this@RegisterActivity).apply {
                                                 setTitle("Error")
-                                                setMessage("Register gagal.\nTerjadi kesalahan " + result.error)
+                                                setMessage("Register gagal.\n" + result.error)
                                                 setPositiveButton("Ok") { dialog, _ ->
                                                     dialog.dismiss()
                                                 }

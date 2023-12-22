@@ -3,14 +3,14 @@ package com.garbo.garboapplication.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.data.pref.UserModel
 import com.garbo.garboapplication.data.pref.UserPreference
+import com.garbo.garboapplication.data.request.LoginRequest
+import com.garbo.garboapplication.data.request.RegisterRequest
 import com.garbo.garboapplication.data.response.LoginResponse
 import com.garbo.garboapplication.data.response.RegisterResponse
 import com.garbo.garboapplication.data.retrofit.ApiService
-import com.garbo.garboapplication.Result
-import com.garbo.garboapplication.data.request.LoginRequest
-import com.garbo.garboapplication.data.request.RegisterRequest
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository private constructor(
@@ -33,18 +33,32 @@ class UserRepository private constructor(
         try {
             val request = LoginRequest(username, pass)
             val response = apiService.login(request)
-            if (response.accessToken == null) {
-                emit(Result.Error(response.message ?: ""))
+            if (response.message != null) {
+                emit(Result.Error(response.message))
             } else {
                 _loginResponse.value = Result.Success(response)
                 emitSource(_loginResponse)
             }
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            val statusCode = e.message?.let { message ->
+                Regex("HTTP (\\d+)").find(message)?.groups?.get(1)?.value
+            }
+
+            val friendlyMessage = when (statusCode) {
+                "400" -> "Missing data"
+                "401" -> "Invalid username or password"
+                else -> e.message.toString()
+            }
+            emit(Result.Error(friendlyMessage))
         }
     }
 
-    fun register(username: String, pass: String, name: String, email: String): LiveData<Result<RegisterResponse>> =
+    fun register(
+        username: String,
+        pass: String,
+        name: String,
+        email: String
+    ): LiveData<Result<RegisterResponse>> =
         liveData {
             emit(Result.Loading)
             try {
@@ -57,7 +71,16 @@ class UserRepository private constructor(
                     emit(Result.Error(response.message ?: ""))
                 }
             } catch (e: Exception) {
-                emit(Result.Error(e.message.toString()))
+                val statusCode = e.message?.let { message ->
+                    Regex("HTTP (\\d+)").find(message)?.groups?.get(1)?.value
+                }
+
+                val friendlyMessage = when (statusCode) {
+                    "400" -> "Missing data"
+                    "409" -> "Username or email already exist"
+                    else -> e.message.toString()
+                }
+                emit(Result.Error(friendlyMessage))
             }
         }
 
