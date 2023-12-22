@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.garbo.garboapplication.R
 import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.databinding.ActivityUploadBinding
@@ -151,10 +152,12 @@ class UploadActivity : AppCompatActivity() {
                         }
 
                         is Result.Success -> {
+                            val data = result.data
                             showLoading(false)
                             AlertDialog.Builder(this).apply {
                                 setTitle("Selamat!")
-                                setMessage(getString(R.string.successful_upload))
+                                val message = getString(R.string.successful_upload) + "\nKlasifikasi: " +  data.prediction + "\nAkurasi: " + data.accuracy
+                                setMessage(message)
                                 setPositiveButton("Lanjut") { _, _ ->
                                     val intent = Intent(context, HomeActivity::class.java)
                                     intent.flags =
