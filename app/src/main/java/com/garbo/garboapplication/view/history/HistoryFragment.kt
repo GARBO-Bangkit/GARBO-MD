@@ -77,7 +77,7 @@ class HistoryFragment : Fragment() {
                             "401" -> {
                                 val message = "Token has expired"
                                 AlertDialog.Builder(requireContext()).apply {
-                                    setTitle("Selamat!")
+                                    setTitle("Timeout!")
                                     setMessage(message)
                                     setPositiveButton("Lanjut") { _, _ ->
                                         val intent =

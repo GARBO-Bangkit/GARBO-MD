@@ -14,9 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.garbo.garboapplication.R
+import com.garbo.garboapplication.Result
 import com.garbo.garboapplication.databinding.ActivityUploadBinding
 import com.garbo.garboapplication.getImageUri
+import com.garbo.garboapplication.reduceFileImage
+import com.garbo.garboapplication.uriToFile
 import com.garbo.garboapplication.view.UploadViewModelFactory
+import com.garbo.garboapplication.view.dashboard.HomeActivity
 import com.garbo.garboapplication.view.login.LoginActivity
 
 class UploadActivity : AppCompatActivity() {
@@ -136,58 +140,83 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun uploadImage(token: String) {
-        finish()
-//        currentImageUri?.let { uri ->
-//            val imageFile = uriToFile(uri, this).reduceFileImage()
-//
-//            viewModel.uploadImage(token, imageFile).observe(this) { result ->
-//                if (result != null) {
-//                    when (result) {
-//                        is Result.Loading -> {
-//                            showLoading(true)
-//                        }
-//
-//                        is Result.Success -> {
-//                            showLoading(false)
-//                            AlertDialog.Builder(this).apply {
-//                                setTitle("Selamat!")
-//                                setMessage(getString(R.string.successful_upload))
-//                                setPositiveButton("Lanjut") { _, _ ->
-//                                    val intent = Intent(context, HomeActivity::class.java)
-//                                    intent.flags =
-//                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//                                    startActivity(intent)
-//                                    finish()
-//                                }
-//                                create()
-//                                show()
-//                            }
-//                        }
-//
-//                        is Result.Error -> {
-//                            AlertDialog.Builder(this).apply {
-//                                setTitle("Error")
-//                                setMessage("Terjadi kesalahan" + result.error)
-//                                setPositiveButton("Ok") { dialog, _ ->
-//                                    dialog.dismiss()
-//                                }
-//                                create()
-//                                show()
-//                            }
-//                            showLoading(false)
-//                        }
-//                    }
-//                }
-//            }
-//        } ?: AlertDialog.Builder(this).apply {
-//            setTitle("Error")
-//            setMessage(getString(R.string.empty_image_warning))
-//            setPositiveButton("Ok") { dialog, _ ->
-//                dialog.dismiss()
-//            }
-//            create()
-//            show()
-//        }
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, this).reduceFileImage()
+
+            viewModel.uploadImage(token, imageFile).observe(this) { result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> {
+                            showLoading(true)
+                        }
+
+                        is Result.Success -> {
+                            showLoading(false)
+                            AlertDialog.Builder(this).apply {
+                                setTitle("Selamat!")
+                                setMessage(getString(R.string.successful_upload))
+                                setPositiveButton("Lanjut") { _, _ ->
+                                    val intent = Intent(context, HomeActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                create()
+                                show()
+                            }
+                        }
+
+                        is Result.Error -> {
+                            val statusCode = result.error.let { message ->
+                                Regex("HTTP (\\d+)").find(message)?.groups?.get(1)?.value
+                            }
+
+                            when (statusCode) {
+                                "401" -> {
+                                    val message = "Token has expired"
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle("Timeout!")
+                                        setMessage(message)
+                                        setPositiveButton("Lanjut") { _, _ ->
+                                            val intent =
+                                                Intent(context, LoginActivity::class.java)
+                                            intent.flags =
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+
+                                else -> {
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle("Error")
+                                        setMessage("Terjadi kesalahan\n" + result.error)
+                                        setNegativeButton("Cancel") { dialog, _ ->
+                                            dialog.dismiss()
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                            }
+                            showLoading(false)
+                        }
+                    }
+                }
+            }
+        } ?: AlertDialog.Builder(this).apply {
+            setTitle("Error")
+            setMessage(getString(R.string.empty_image_warning))
+            setPositiveButton("Ok") { dialog, _ ->
+                dialog.dismiss()
+            }
+            create()
+            show()
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

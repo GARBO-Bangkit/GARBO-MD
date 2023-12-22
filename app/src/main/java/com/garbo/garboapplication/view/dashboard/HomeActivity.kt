@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
                             "401" -> {
                                 val message = "Token has expired"
                                 AlertDialog.Builder(this).apply {
-                                    setTitle("Selamat!")
+                                    setTitle("Timeout!")
                                     setMessage(message)
                                     setPositiveButton("Lanjut") { _, _ ->
                                         val intent =
