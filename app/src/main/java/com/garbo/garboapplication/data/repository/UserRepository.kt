@@ -90,9 +90,8 @@ class UserRepository private constructor(
     fun getPoints(token: String): LiveData<Result<PointResponse>> = liveData {
         emit(Result.Loading)
         try {
-            Log.d("TOKEN", token)
-            val response = apiService.point(token)
-            Log.d("RESPONSE", "$response")
+            val reqToken = "Bearer $token"
+            val response = apiService.getPoint(reqToken)
             if (response.error != null) {
                 emit(Result.Error(response.error.toString()))
             } else {

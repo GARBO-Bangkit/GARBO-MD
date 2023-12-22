@@ -3,10 +3,12 @@ package com.garbo.garboapplication.view
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.garbo.garboapplication.data.repository.HistoryRepository
 import com.garbo.garboapplication.data.repository.UploadRepository
 import com.garbo.garboapplication.data.repository.UserRepository
 import com.garbo.garboapplication.di.Injection
 import com.garbo.garboapplication.view.dashboard.HomeViewModel
+import com.garbo.garboapplication.view.history.HistoryViewModel
 import com.garbo.garboapplication.view.login.LoginViewModel
 import com.garbo.garboapplication.view.register.RegisterViewModel
 import com.garbo.garboapplication.view.upload.UploadViewModel
@@ -74,6 +76,41 @@ class HomeViewModelFactory(
                 }
             }
             return INSTANCE as HomeViewModelFactory
+        }
+    }
+}
+
+class HistoryViewModelFactory(
+    private val userRepository: UserRepository,
+    private val historyRepository: HistoryRepository
+) : ViewModelProvider.NewInstanceFactory() {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return when {
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(userRepository, historyRepository) as T
+            }
+
+            else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+        }
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: HistoryViewModelFactory? = null
+
+        @JvmStatic
+        fun getInstance(context: Context): HistoryViewModelFactory {
+            if (INSTANCE == null) {
+                synchronized(HistoryViewModelFactory::class.java) {
+                    INSTANCE = HistoryViewModelFactory(
+                        Injection.provideUserRepository(context),
+                        Injection.provideHistoryRepository(context)
+                    )
+                }
+            }
+            return INSTANCE as HistoryViewModelFactory
         }
     }
 }

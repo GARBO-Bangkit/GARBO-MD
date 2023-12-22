@@ -1,60 +1,115 @@
 package com.garbo.garboapplication.view.history
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.garbo.garboapplication.R
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.garbo.garboapplication.Result
+import com.garbo.garboapplication.databinding.FragmentHistoryBinding
+import com.garbo.garboapplication.view.login.LoginActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private val historyViewModel: HistoryViewModel by activityViewModels()
+    private var token = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        token = arguments?.getString(HistoryActivity.TOKEN_KEY).toString()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        getHistories(token)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // To avoid memory leaks
+    }
+
+    private fun getHistories(token: String) {
+        historyViewModel.getHistories(token).observe(requireActivity()) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        val data = result.data
+
+                        viewManager = LinearLayoutManager(context)
+                        viewAdapter = HistoryListAdapter(data.historyResponse!!)
+
+                        with(binding.rvHistories) {
+                            setHasFixedSize(true)
+                            layoutManager = viewManager
+                            adapter = viewAdapter
+                        }
+                    }
+
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        val statusCode = result.error.let { message ->
+                            Regex("HTTP (\\d+)").find(message)?.groups?.get(1)?.value
+                        }
+
+                        when (statusCode) {
+                            "401" -> {
+                                val message = "Token has expired"
+                                AlertDialog.Builder(requireContext()).apply {
+                                    setTitle("Selamat!")
+                                    setMessage(message)
+                                    setPositiveButton("Lanjut") { _, _ ->
+                                        val intent =
+                                            Intent(context, LoginActivity::class.java)
+                                        intent.flags =
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        startActivity(intent)
+                                        activity?.finish()
+                                    }
+                                    create()
+                                    show()
+                                }
+                            }
+
+                            else -> {
+                                AlertDialog.Builder(requireContext()).apply {
+                                    setTitle("Error")
+                                    setMessage("Terjadi kesalahan\n" + result.error)
+                                    setPositiveButton("Refresh") { _, _ ->
+                                        getHistories(token)
+                                    }
+                                    setNegativeButton("Cancel") { dialog, _ ->
+                                        dialog.dismiss()
+                                    }
+                                    create()
+                                    show()
+                                }
+                            }
+                        }
+                    }
                 }
             }
+        }
     }
 }

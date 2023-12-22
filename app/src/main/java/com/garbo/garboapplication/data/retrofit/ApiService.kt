@@ -2,6 +2,7 @@ package com.garbo.garboapplication.data.retrofit
 
 import com.garbo.garboapplication.data.request.LoginRequest
 import com.garbo.garboapplication.data.request.RegisterRequest
+import com.garbo.garboapplication.data.response.HistoryResponse
 import com.garbo.garboapplication.data.response.LoginResponse
 import com.garbo.garboapplication.data.response.PointResponse
 import com.garbo.garboapplication.data.response.RegisterResponse
@@ -22,7 +23,12 @@ interface ApiService {
     ): LoginResponse
 
     @GET("point")
-    suspend fun point(
+    suspend fun getPoint(
         @Header("Authorization") token: String
     ): PointResponse
+
+    @GET("result")
+    suspend fun getHistory(
+        @Header("Authorization") token: String
+    ): HistoryResponse
 }

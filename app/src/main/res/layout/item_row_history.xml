@@ -49,6 +49,7 @@
             tools:text="@string/history_date" />
 
         <TextView
+            android:id="@+id/tv_item_points"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

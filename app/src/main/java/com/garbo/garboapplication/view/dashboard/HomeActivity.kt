@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
                 finish()
             } else {
                 _token = user.token
-                getPoints("Bearer $_token")
+                getPoints(_token)
             }
         }
     }
@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
                                 AlertDialog.Builder(this).apply {
                                     setTitle("Error")
                                     setMessage("Terjadi kesalahan\n" + result.error)
-                                    setPositiveButton("Refresh") { dialog, _ ->
+                                    setPositiveButton("Refresh") { _, _ ->
                                         getPoints(token)
                                     }
                                     setNegativeButton("Cancel") { dialog, _ ->

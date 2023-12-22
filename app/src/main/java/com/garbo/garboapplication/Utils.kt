@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
@@ -100,4 +99,15 @@ fun rotateImage(source: Bitmap, angle: Float): Bitmap? {
     return Bitmap.createBitmap(
         source, 0, 0, source.width, source.height, matrix, true
     )
+}
+
+fun getDateFromTimestamp(timestamp: String): String?{
+    val originalFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    val dateOnlyFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+    val date = originalFormat.parse(timestamp)?.let {
+        dateOnlyFormat.format(it)
+    }
+
+    return date
 }
